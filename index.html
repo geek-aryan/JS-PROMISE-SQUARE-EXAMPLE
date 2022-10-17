@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital@1&display=swap"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+    <style>
+      body {
+        background-color: #EAEAEA;
+        font-family: "Merriweather", serif;
+        text-align: center;
+
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Find Square</h1>
+    <label for="inpbox">Enter a value</label>
+    <input type="text" id="inptbox" /><br /><br />
+    <button onclick="doTask()">Get Result</button>
+    <p class="respara"></p>
+    <span id="img"></span>
+
+    <script>
+      let resPara;
+      function success(result) {
+        resPara.innerHTML += "Its square is " + result;
+      }
+      function failure(result) {
+        resPara.innerHTML += result;
+      }
+      function makePromise(value) {
+        return new Promise(function (resolve, reject) {
+          setTimeout(() => {
+            let num = Number(value);
+            document.getElementById("img").innerHTML = "";
+            isNaN(num)
+              ? reject("Non numeric value is not have a square!!")
+              : resolve(num * num);
+            // if(isNaN(num))
+            // {
+            //     reject("Non numeric value is not have a square!!")
+            // }
+            // else
+            // {
+            //     resolve(num*num)
+            // }
+          }, 1000);
+        });
+      }
+      function doTask() {
+        let inptbox = document.getElementById("inptbox");
+        let data = inptbox.value;
+        console.log(data);
+        resPara = document.querySelector(".respara");
+        document.getElementById("img").innerHTML =
+          '<img src="loading-gif.gif" width="50" alt="">';
+        resPara.innerHTML = "Current value is " + data + "<br>";
+        let pr = makePromise(data);
+        pr.then(success, failure);
+      }
+    </script>
+  </body>
+</html>
